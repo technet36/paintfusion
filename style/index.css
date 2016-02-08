@@ -1,0 +1,85 @@
+html{
+    background-image: url("../images/bg.png");
+}
+
+section{
+    display: inline-block;
+    position: absolute;
+    width: 30%;
+    right:10%;
+    top:7%;
+}
+input{
+    display: inline-block;
+    position: relative;
+    left:10%;
+    height:25px;
+    margin-bottom: 20px;
+    border: #9f9ba8 solid 1px;
+    background-color: #f1f1f1;
+    border-radius: 7px;
+    padding-left:15px;
+}
+label{
+    position: relative;
+    display: block;
+    left:10%;
+    margin-bottom: 5px;
+}
+#name{
+    display: inline;
+    width: 40%;
+}
+#last-name{
+    width: 40%;
+}
+#submit{
+    position: relative;
+    display: block;
+}
+#server{
+    display: inline-block;
+    position: relative;
+    left:10%;
+    height:25px;
+    margin-bottom: 20px;
+    border: #9f9ba8 solid 1px;
+    background-color: #f1f1f1;
+    border-radius: 7px;
+    padding-left:15px;
+}
+#server-log{
+    position: relative;
+    border: hidden;
+    background: #dddddd;
+    border-radius: 6px;
+    cursor: pointer ;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-left: -20px;
+    height: 25px;
+    text-align: center;
+}
+#passwordTool{
+    position: relative;
+    margin-top: 0%;
+    margin-bottom: 30px;
+    font-size: small;
+    left:10%;
+    text-decoration: underline;
+    color: #5b5b5b;
+    cursor: pointer;
+}
+#pass{
+    margin-bottom: 0%;
+}
+#check{
+    position: relative;
+    background-color: #df544d;
+    border: #7d1e1a solid 1px;
+    border-radius: 7px;
+    display: inline-block;
+    left:15%;
+    padding: 2px;
+}
