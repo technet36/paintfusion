@@ -9,6 +9,9 @@ section{
     right:10%;
     top:7%;
 }
+#tabs{
+    position: fixed;
+}
 input{
     display: inline-block;
     position: relative;
@@ -37,11 +40,12 @@ label{
     position: relative;
     display: block;
 }
+
 #server{
     display: inline-block;
     position: relative;
-    left:10%;
     height:25px;
+    left:10%;
     margin-bottom: 20px;
     border: #9f9ba8 solid 1px;
     background-color: #f1f1f1;
@@ -57,7 +61,7 @@ label{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin-left: -20px;
+    left:-11%;
     height: 25px;
     text-align: center;
 }
@@ -71,13 +75,28 @@ label{
     color: #5b5b5b;
     cursor: pointer;
 }
+.less{
+display: none;
+}
+.more{
+    display: block;
+}
 #pass{
     margin-bottom: 0%;
 }
-#check{
+.check{
     position: relative;
-    background-color: #df544d;
-    border: #7d1e1a solid 1px;
+    background-color: #dfd9dd;
+    border: #7a727d solid 1px;
+    border-radius: 7px;
+    display: inline-block;
+    left:15%;
+    padding: 2px;
+}
+.check_Y{
+    position: relative;
+    background-color: #6adf5e;
+    border: #177d14 solid 1px;
     border-radius: 7px;
     display: inline-block;
     left:15%;
