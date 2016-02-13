@@ -10,9 +10,10 @@ switch ($_GET["action"]){
         $mail=$_POST["mail"];
         $login=$_POST["login"];
         $server=$_POST["server"];
-
+    $summonerId=$_POST["summonerId"];
         $password=$_POST["pass"];
         $password = hash("sha256",$password);
 
         break;
+
 }

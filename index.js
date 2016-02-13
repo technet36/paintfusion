@@ -10,7 +10,7 @@ function checkName (server, name){
             $("#check").css("border", "#177d14 solid 1px");
             $("#check").html("Valid");
             console.log(data);
-            loginTot = 1;
+            loginTot = data;
             return 1;
         }
         else {
@@ -55,7 +55,9 @@ $("#log_in").on("click",function(){
 
 
 $("#submit").on("click",function(){
-        console.log("sign_up");
+
+    $("#submit").after("<img src='images/ajax-loader.gif' id='gif'/>");
+    console.log("sign_up");
     var ok = 1;
     var name = $("#name").val();
     var lastName = $("#last-name").val();
@@ -64,6 +66,7 @@ $("#submit").on("click",function(){
     var server = $("#server").val();
     var pass1 = $("#pass-1").val();
     var pass2 = $("#pass-2").val();
+    var summonerId;
 
     var regexMail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var regexPassA = /(.)*([a-zA-Z])+(.)*/
@@ -74,25 +77,47 @@ $("#submit").on("click",function(){
     console.log("login : "+login+" server : "+server);
     console.log("password : "+pass1);
     console.log("password : "+pass2);
+
+
     if(!regexMail.test(mail)) {         //// test du mail
         $("#mail").css("border", "#DD0E11 solid 3px");
         ok = 0;
     }
     else $("#mail").css("border", "#9f9ba8 solid 1px");
 
-    if (!loginTot) ok=0;
+var test=0;
+    if (loginTot== 0) ok=0;
 
-
+    else {
+        summonerId = loginTot[""+login+""].id;
+        var request = new XMLHttpRequest();
+        request.open('GET', "./utils/api.php?action=runesPages&server="+server+"&id="+summonerId, false);  // `false` makes the request synchronous
+        request.send(null);
+        var myJson = $.parseJSON(request.responseText);
+        console.log(myJson);
+        $.each(myJson[""+summonerId+""].pages,function(i, data){
+            if (data.name.toLowerCase()=="paintfusion")test =1;
+        });
+    console.log("test : "+test);
+        if (!test){
+            ok=0;
+            $("#runesPage").css("background-color", "#DF231A");
+            $("#runesPage").css("border", "#7d1e1a solid 1px");
+        }
+    }
     if (pass1!=pass2 || (pass1.length)<6 || !regexPassA.test(pass1) || !regexPass1.test(pass1)){
         $(".pass").css("border", "#DD0E11 solid 3px");
         ok=0;
     }
     else $(".pass").css("border", "#9f9ba8 solid 1px");
 
+console.log("ok : "+ok);
     if (ok){
-        $.post("./utils/sql.php?action=auth", {"name":name, "lastName":lastName, "mail":mail, "login":login, "server":server, "pass":pass1})
+        $.post("./utils/sql.php?action=auth", {"name":name, "lastName":lastName, "mail":mail, "login":login, "server":server, "pass":pass1, "summonerId":summonerId})
     }
 
+
+        $("#gif").remove();
 });
 
 

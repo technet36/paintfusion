@@ -60,8 +60,13 @@
                 <label for="pass-1">Password :</label>
                 <input type="password" name="pass1" class="pass" id="pass-1" placeholder="Password" title="minimum 6 caracteres including letters and numbers"/>
                 <label for="pass-2">Password again :</label>
-                <input type="password" name="pass2" class="pass" id="pass-2" placeholder="Password" title="minimum 6 caracteres including letters and numbers"/>
-                <input type="submit" id="submit" value="Sign up"/>
+            <input type="password" name="pass2" class="pass" id="pass-2" placeholder="Password" title="minimum 6 caracteres including letters and numbers"/>
+
+            <div id="runesPage">
+                <img src="images/warning.png" id="imgWarning"/>
+                <div id="textWarning"><p >in order to check you are the owner of the account please rename one of your runes page as paintfusion</p> </div>
+            </div>
+            <input type="submit" id="submit" value="Sign up"/>
         </div>
     </div>
 </section>
