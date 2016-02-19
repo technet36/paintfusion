@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2016 at 10:59 PM
+-- Generation Time: Feb 18, 2016 at 04:07 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -84,7 +84,12 @@ CREATE TABLE IF NOT EXISTS `team_to_user` (
   `id_team` mediumint(8) unsigned NOT NULL,
   `id_user` int(10) unsigned NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=player, 0=substitute',
+  `champ1` tinyint(3) unsigned DEFAULT NULL,
+  `champ2` tinyint(3) unsigned DEFAULT NULL,
+  `champ3` tinyint(3) unsigned DEFAULT NULL,
+  `post_pref` enum('Top','Jungle','Mid','ADC','Support','AFK','Troll','Feed','nevermind') CHARACTER SET utf8 NOT NULL DEFAULT 'nevermind',
   PRIMARY KEY (`ID`),
+  UNIQUE KEY `champ1` (`champ1`,`champ2`,`champ3`),
   KEY `id_team` (`id_team`,`id_user`),
   KEY `id_user` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -107,6 +112,7 @@ CREATE TABLE IF NOT EXISTS `tournament_t` (
   `date` datetime NOT NULL,
   `registration _max_date` datetime NOT NULL,
   `note` varchar(535) CHARACTER SET utf8 DEFAULT NULL,
+  `id_riot_tournament` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id_tournament`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -150,29 +156,25 @@ CREATE TABLE IF NOT EXISTS `tournament_to_user` (
 CREATE TABLE IF NOT EXISTS `user_t` (
   `id_user` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(65) COLLATE utf8_unicode_ci NOT NULL COMMENT 'pseudo in game',
-  `password` varchar(65) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(128) CHARACTER SET utf8 NOT NULL,
   `nom` varchar(65) CHARACTER SET utf8 DEFAULT NULL,
   `prenom` varchar(65) CHARACTER SET utf8 DEFAULT NULL,
   `email` varchar(65) CHARACTER SET utf8 NOT NULL COMMENT 'for password recovery',
   `server` enum('NA','EUNE','EUW','LAN','LAS','BR','TR','RU','OCE') CHARACTER SET utf8 NOT NULL,
-  `champ1` tinyint(3) unsigned DEFAULT NULL COMMENT 'id of main champ1',
-  `champ2` tinyint(3) unsigned DEFAULT NULL COMMENT 'id of main champ2',
-  `champ3` tinyint(3) unsigned DEFAULT NULL COMMENT 'id of main champ3',
-  `pref_champ1` tinyint(3) unsigned DEFAULT NULL COMMENT 'id of wanted champ1',
-  `pref_champ2` tinyint(3) unsigned DEFAULT NULL COMMENT 'id of wanted champ2',
-  `pref_champ3` tinyint(3) unsigned DEFAULT NULL COMMENT 'id of wanted champ3',
   `mat_gen` varchar(65) CHARACTER SET utf8 DEFAULT NULL COMMENT 'matrix of the skill of the player',
-  `mat_champ1` varchar(65) CHARACTER SET utf8 DEFAULT NULL COMMENT 'matrix of the skill of the player on champ1',
-  `mat_champ2` varchar(65) CHARACTER SET utf8 DEFAULT NULL COMMENT 'matrix of the skill of the player on champ2',
-  `mat_champ3` varchar(65) CHARACTER SET utf8 DEFAULT NULL COMMENT 'matrix of the skill of the player on champ3',
-  `tier` enum('bronze','silver','gold','platinum','diamond','master','challenger') CHARACTER SET utf8 DEFAULT NULL,
-  `division` enum('1','2','3','4','5') COLLATE utf8_unicode_ci DEFAULT NULL,
-  `level` tinyint(4) unsigned NOT NULL,
   `note` varchar(535) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1= player,0=admin, banned, restricted',
   `privacy_lvl` tinyint(4) DEFAULT NULL,
+  `summonerId` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=45 ;
+
+--
+-- Dumping data for table `user_t`
+--
+
+INSERT INTO `user_t` (`id_user`, `pseudo`, `password`, `nom`, `prenom`, `email`, `server`, `mat_gen`, `note`, `status`, `privacy_lvl`, `summonerId`) VALUES
+(44, 'technet', 'dbeb6bce931348ff8906215c3530df638c92eaff40d6e72ced36b37198157122', 'maxence', 'morand', 'technet36@gmail.com', 'EUW', NULL, NULL, 1, NULL, 63657737);
 
 --
 -- Constraints for dumped tables
@@ -197,22 +199,22 @@ ALTER TABLE `match_to_team`
 -- Constraints for table `team_to_user`
 --
 ALTER TABLE `team_to_user`
-  ADD CONSTRAINT `user_fk_team` FOREIGN KEY (`id_user`) REFERENCES `user_t` (`id_user`) ON DELETE CASCADE,
-  ADD CONSTRAINT `team_fk_user` FOREIGN KEY (`id_team`) REFERENCES `team_t` (`id_team`) ON DELETE CASCADE;
+  ADD CONSTRAINT `team_fk_user` FOREIGN KEY (`id_team`) REFERENCES `team_t` (`id_team`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_fk_team` FOREIGN KEY (`id_user`) REFERENCES `user_t` (`id_user`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `tournament_to_team`
 --
 ALTER TABLE `tournament_to_team`
-  ADD CONSTRAINT `tournament_fk_team` FOREIGN KEY (`id_team`) REFERENCES `team_t` (`id_team`) ON DELETE CASCADE,
-  ADD CONSTRAINT `team_fk_tournament` FOREIGN KEY (`id_tournament`) REFERENCES `tournament_t` (`id_tournament`) ON DELETE CASCADE;
+  ADD CONSTRAINT `team_fk_tournament` FOREIGN KEY (`id_tournament`) REFERENCES `tournament_t` (`id_tournament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tournament_fk_team` FOREIGN KEY (`id_team`) REFERENCES `team_t` (`id_team`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `tournament_to_user`
 --
 ALTER TABLE `tournament_to_user`
-  ADD CONSTRAINT `registered_fk_user` FOREIGN KEY (`id_user`) REFERENCES `user_t` (`id_user`) ON DELETE CASCADE,
-  ADD CONSTRAINT `registered_fk_tournament` FOREIGN KEY (`id_tournament`) REFERENCES `tournament_t` (`id_tournament`) ON DELETE CASCADE;
+  ADD CONSTRAINT `registered_fk_tournament` FOREIGN KEY (`id_tournament`) REFERENCES `tournament_t` (`id_tournament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `registered_fk_user` FOREIGN KEY (`id_user`) REFERENCES `user_t` (`id_user`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

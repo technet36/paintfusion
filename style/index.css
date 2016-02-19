@@ -8,10 +8,9 @@ section{
     position: absolute;
     width: 30%;
     left:60%;
-    top:7%;
+    margin:7%;
 }
 #tabs{
-    position: fixed;
 }
 input{
     display: inline-block;
@@ -39,9 +38,32 @@ label{
 }
 #submit{
     position: relative;
-    display: inline-block;
+    display: inline;
+    left: 0px;
+    padding:0px;
+    margin: 0%;
+}
+#alert{
+    position: absolute;
+    left: 101%;
+    display: inline;
+    width: -moz-min-content;
+}
+#gif{
+    display: inline;
+    position: absolute;
+    left: 101%;
+}
+#div_submit{
+    width: -moz-min-content;
+    position: relative;
+    left: 10%;
+    height:25px;
 }
 #mail{
+    width: 60%;
+}
+#mail1{
     width: 60%;
 }
 
@@ -56,19 +78,35 @@ label{
     border-radius: 7px;
     padding-left:15px;
 }
-#server-log{
+#summoner{
     position: relative;
+    left: 10%;
+    width: -moz-min-content;
+    height: 25px;
+    margin-bottom: 20px;
+}
+#login{
+    left:0px;
+    position: relative;
+    display: inline;
+    margin: -1px;
+
+}
+#server-log{
+    position: absolute;
     border: hidden;
     background: #dddddd;
+    display: inline-block;
     border-radius: 6px;
     cursor: pointer ;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    left:-11%;
+    right:0px;
     height: 25px;
     text-align: center;
 }
+
 #passwordTool{
     position: relative;
     margin-top: 0%;
@@ -78,6 +116,11 @@ label{
     text-decoration: underline;
     color: #5b5b5b;
     cursor: pointer;
+}
+#tool{
+    display: inline-block;
+    position: absolute;
+    left:35%;
 }
 .less{
 display: none;
@@ -122,11 +165,4 @@ display: none;
     position: relative;
     width: 86%;
     text-align: justify;
-}
-#gif{
-    display: inline-block;
-    position: relative;
-    top: 9px;
-    left: 45px;
-
 }

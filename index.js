@@ -27,14 +27,16 @@ function checkName (server, name){
 $(document).ready(function(){ //quand le document se charge
 
 
- $("#passwordTool").on("click",function(){
+    $("#passwordTool").on("click",function(){
     $("#toggle").toggleClass("more", "easeOutSine");
+        if ($("#log_in").val()=="log in") $("#log_in").val("reset");
+        else $("#log_in").val("log in");
  });
 
 
     var anu ;
     var i = 0;
- $(".login_2").on("keyup",function (){
+    $(".login_2").on("keyup",function (){
      i = $(".login_2").val().length;
      clearTimeout(anu);
      if (i>=3){
@@ -47,17 +49,43 @@ $(document).ready(function(){ //quand le document se charge
      }
  });
 
-$( "select" ).change(function() {checkName ($(".server_2").val(),$(".login_2").val() );}).trigger( "change" );
+    $( "select" ).change(function() {checkName ($(".server_2").val(),$(".login_2").val() );}).trigger( "change" );
 
-$("#log_in").on("click",function(){
-        console.log("log_in");
+    $("#log_in").on("click",function(){
+        console.log($("#log_in").val());
+        if ($("#log_in").val()=="log in"){
+
+        }
+        else if ($("#log_in").val()=="reset"){
+
+            var dest= $("#mail1").val();
+            var login = $(".login").val();
+            var server = $("#server-log").val();
+            $.post("./utils/sql.php?action=mail", {"dest":dest, "server":server, "login":login}, function (data){
+                console.log(data);
+                if (data==12){ ///OK
+                    console.log("cjcb");
+                    document.location.href="./home";
+                }
+                else if (data==10){///not registered
+                    $("#tool").css("background-color", "#DF231A");
+                    $("#tool").css("border", "#7d1e1a solid 1px");
+                    $("#tool").html("not registered");
+                }
+                else if (data == 11){///wrong email
+                    $("#tool").css("background-color", "#DF231A");
+                    $("#tool").css("border", "#7d1e1a solid 1px");
+                    $("#tool").html("wrong email");
+                }
+
+            });
+        }
 });
 
 
-$("#submit").on("click",function(){
+    $("#submit").on("click",function(){
 
     $("#submit").after("<img src='images/ajax-loader.gif' id='gif'/>");
-    console.log("sign_up");
     var ok = 1;
     var name = $("#name").val();
     var lastName = $("#last-name").val();
@@ -71,13 +99,6 @@ $("#submit").on("click",function(){
     var regexMail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var regexPassA = /(.)*([a-zA-Z])+(.)*/
     var regexPass1 = /(.)*([0-9])+(.)*/
-
-    console.log("full name : "+name+" "+lastName);
-    console.log("mail "+regexMail.test(mail)+": "+mail);
-    console.log("login : "+login+" server : "+server);
-    console.log("password : "+pass1);
-    console.log("password : "+pass2);
-
 
     if(!regexMail.test(mail)) {         //// test du mail
         $("#mail").css("border", "#DD0E11 solid 3px");
@@ -94,11 +115,9 @@ var test=0;
         request.open('GET', "./utils/api.php?action=runesPages&server="+server+"&id="+summonerId, false);  // `false` makes the request synchronous
         request.send(null);
         var myJson = $.parseJSON(request.responseText);
-        console.log(myJson);
         $.each(myJson[""+summonerId+""].pages,function(i, data){
             if (data.name.toLowerCase()=="paintfusion")test =1;
         });
-    console.log("test : "+test);
         if (!test){
             ok=0;
             $("#runesPage").css("background-color", "#DF231A");
@@ -113,7 +132,18 @@ var test=0;
 
 console.log("ok : "+ok);
     if (ok){
-        $.post("./utils/sql.php?action=auth", {"name":name, "lastName":lastName, "mail":mail, "login":login, "server":server, "pass":pass1, "summonerId":summonerId})
+        $.post("./utils/sql.php?action=auth", {"name":name, "lastName":lastName, "mail":mail, "login":login, "server":server, "pass":pass1, "summonerId":summonerId}, function (data){
+            console.log(data);
+            if (data==1){
+                document.location.href="./home";
+            }
+            else if (data==0){
+                $("#alert").html("already registered");
+                $("#alert").css("background-color", "#DF231A");
+                $("#alert").css("border", "#7d1e1a solid 1px");
+            } 
+        });
+
     }
 
 
