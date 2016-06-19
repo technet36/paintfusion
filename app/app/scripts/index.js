@@ -31,7 +31,7 @@ $(document).ready(function(){ //quand le document se charge
     $("#toggle").toggleClass("more", "easeOutSine");
         if ($("#log_in").val()=="log in") $("#log_in").val("reset");
         else $("#log_in").val("log in");
- });
+ });//affiche/cache le formulaire pour l'envoie du mail avec password
 
 
     var anu ;
@@ -47,25 +47,39 @@ $(document).ready(function(){ //quand le document se charge
          }
      },700);
      }
- });
+ });// check a validié du summoner
 
-    $( "select" ).change(function() {checkName ($(".server_2").val(),$(".login_2").val() );}).trigger( "change" );
+    $("select").change(function() {checkName ($(".server_2").val(),$(".login_2").val() );}).trigger( "change" );// check a validié du summoner
 
     $("#log_in").on("click",function(){
-        console.log($("#log_in").val());
+        var password= $("#pass").val();
+        //TODO: encryption du password (faire la même pour le case mail de sql.php
+        var dest= $("#mail1").val();
+        var login = $(".login").val();
+        var server = $("#server-log").val();
         if ($("#log_in").val()=="log in"){
-
+            $.post("./utils/sql.php?action=login", {"server":server, "login":login, "pass":password}, function (data){
+            if (data == 10)
+            {
+                document.location.href="./home";
+            }
+            else if (data == 11){///wrong
+                $("#tool").css("background-color", "#DF231A");
+                $("#tool").css("border", "#7d1e1a solid 1px");
+                $("#tool").html("wrong login, server or password");
+            }
+            });
         }
         else if ($("#log_in").val()=="reset"){
 
-            var dest= $("#mail1").val();
-            var login = $(".login").val();
-            var server = $("#server-log").val();
             $.post("./utils/sql.php?action=mail", {"dest":dest, "server":server, "login":login}, function (data){
                 console.log(data);
                 if (data==12){ ///OK
-                    console.log("cjcb");
-                    document.location.href="./home";
+                    $("#toggle").toggleClass("more", "easeOutSine");
+                    $("#tool").css("background-color", "#6adf5e");
+                    $("#tool").css("border", "#177d14 solid 1px");
+                    $("#log_in").val("log in");
+                    $("#tool").html("Check your email");
                 }
                 else if (data==10){///not registered
                     $("#tool").css("background-color", "#DF231A");
@@ -80,7 +94,7 @@ $(document).ready(function(){ //quand le document se charge
 
             });
         }
-});
+});//pour se logger ou reset le password
 
 
     $("#submit").on("click",function(){
@@ -148,7 +162,7 @@ console.log("ok : "+ok);
 
 
         $("#gif").remove();
-});
+});//pour créer un compte
 
 
 });

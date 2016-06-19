@@ -4,20 +4,20 @@ html{
 }
 
 section{
-    display: inline-block;
+    /*display: inline-block;
     position: absolute;
     width: 30%;
     left:60%;
-    margin:7%;
+    margin:7%;*/
 }
 #tabs{
 }
 input{
-    display: inline-block;
+    /*display: inline-block;
     position: relative;
     left:10%;
     height:25px;
-    margin-bottom: 20px;
+    margin-bottom: 20px;*/
     border: #9f9ba8 solid 1px;
     background-color: #f1f1f1;
     border-radius: 7px;
@@ -31,15 +31,15 @@ label{
 }
 #name{
     display: inline;
-    width: 40%;
+    /*width: 40%;*/
 }
 #last-name{
-    width: 40%;
+    /*width: 40%;*/
 }
 #submit{
     position: relative;
     display: inline;
-    left: 0px;
+    /*left: 0px;*/
     padding:0px;
     margin: 0%;
 }

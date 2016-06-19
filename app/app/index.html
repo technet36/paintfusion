@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="app" >
+<head>
+  <meta charset="utf-8">
+  <title>Paintfusion</title>
+
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <link rel="icon" href="favicon.ico"/>
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" >
+
+  <div class="container-fluid">
+
+  </div>
+</nav>
+
+<main role="main" class="main">
+  <div class="container-fluid">
+    <div ui-view></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container-fluid">
+    <ul class="footer__menu">
+
+    </ul>
+  </div>
+</footer>
+
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<!-- config -->
+<script src="scripts/app.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>

@@ -2,8 +2,8 @@
 -- version 4.1.14
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 18, 2016 at 04:07 PM
+-- Host: localhost
+-- Generation Time: Apr 26, 2016 at 04:46 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -167,14 +167,14 @@ CREATE TABLE IF NOT EXISTS `user_t` (
   `privacy_lvl` tinyint(4) DEFAULT NULL,
   `summonerId` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=48 ;
 
 --
 -- Dumping data for table `user_t`
 --
 
 INSERT INTO `user_t` (`id_user`, `pseudo`, `password`, `nom`, `prenom`, `email`, `server`, `mat_gen`, `note`, `status`, `privacy_lvl`, `summonerId`) VALUES
-(44, 'technet', 'dbeb6bce931348ff8906215c3530df638c92eaff40d6e72ced36b37198157122', 'maxence', 'morand', 'technet36@gmail.com', 'EUW', NULL, NULL, 1, NULL, 63657737);
+(47, 'technet', '9bcd168334ea49016364e47cdfa777b2dbc378911569fa5b6aaf993ff66d177d', '', '', 'ellipse.paro@gmail.com', 'EUW', NULL, NULL, 1, NULL, 63657737);
 
 --
 -- Constraints for dumped tables
